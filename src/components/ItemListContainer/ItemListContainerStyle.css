@@ -1,0 +1,17 @@
+@font-face {
+    font-family: fontAmazin;
+    src: url(../NavBar/fonts/OfficinaSansStd-Bold.woff);
+}
+
+.greeting {
+    margin-top: 10px;
+    font-family: fontAmazin;
+    color:#f90;
+    font-size: 80px;
+    
+    
+}
+
+.greeting:hover{
+    color:rgb(255, 136, 0);
+    }
