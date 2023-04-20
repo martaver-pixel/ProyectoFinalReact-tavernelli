@@ -19,9 +19,10 @@
     font-family: fontAmazin;
     color: #ffffff;
     font-size: 50px;
+    text-decoration: none;
 }
 
-.navButtons a { 
+.buttons a { 
     margin-left: 30px;
     border-color: #febd69;
     background-color: #ffffffe1;
@@ -31,18 +32,37 @@
     text-decoration: none;
 }
 
-.navButtons:hover {
+.buttons a:hover {
+
+    outline: 3px solid #f0951e;
+    background-color: #ffffff;
+    
+}
+
+.buttons a:focus{
     border-color: #f0951e;
     border-width: 3px;
     background-color: #ffffff;
+    text-decoration: none;
+    color: #f07c1e  ;
 }
 
-.navButtons:focus{
+.buttons a:active{
+    border-color: #f0951e;
+    border-width: 3px;
+    background-color: #ffffff;
+    text-decoration: none;
+    color: #f07c1e;
+}
+.buttons a:visited {
     border-color: #f07c1e;
     border-width: 3px;
     background-color: #ffffff;
+    text-decoration: none;
+    color: #f07c1e;
 }
 
 .cartWidget {
     color: #febd69;
 }
+

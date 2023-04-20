@@ -4,25 +4,25 @@ import "./NavBarStyle.css";
 const NavBar = () => {
   return (
     <nav className="navBar">
-      <Link to="/">
-        <h3 className="navBrand">amazin</h3>
+      <Link className="navBrand" to="/">
+        <h3>amazin</h3>
       </Link>
 
-      <div className="navButtons">
+      <div className="buttons">
         <NavLink
-          to={`/category/Pequeños`}
+          to={`/category/Pequeño`}
           className={({ isActive }) => (isActive ? "ActiveOption " : "Option ")}
         >
           Pequeño
         </NavLink>
         <NavLink
-          to={`/category/Medianos`}
+          to={`/category/Mediano`}
           className={({ isActive }) => (isActive ? "ActiveOption" : "Option")}
         >
           Mediano
         </NavLink>
         <NavLink
-          to={`/category/Grandes`}
+          to={`/category/Grande`}
           className={({ isActive }) => (isActive ? "ActiveOption" : "Option")}
         >
           Grande
