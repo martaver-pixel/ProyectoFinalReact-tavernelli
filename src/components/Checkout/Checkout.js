@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext, useState } from "react";
 import { Context } from "react";
+import { db } from "../../services/firebase/firebaseConfig";
 import {
   Timestamp,
   collection,
@@ -11,7 +12,6 @@ import {
   where,
   writeBatch,
 } from "firebase/firestore";
-import { db } from "../../services/firebase/firebaseConfig";
 import CheckoutForm from "../CheckoutForm/CheckoutForm";
 import { CartContext } from "../../context/CartContext";
 
@@ -48,7 +48,6 @@ const Checkout = () => {
       );
       const { docs } = productsAddedFromFirestore;
 
-      // if (docs.length === 0) return;
       console.log(docs, "hola");
       docs.forEach((doc) => {
         const dataDoc = doc.data();
