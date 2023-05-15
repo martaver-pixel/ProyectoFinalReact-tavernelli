@@ -35,7 +35,9 @@ const ItemListContainer = ({ greeting }) => {
 
   return (
     <div>
-      {loading ? "loading..." : products.map((perro) => <Item {...perro} />)}
+      {loading
+        ? "loading..."
+        : products.map((perro) => <Item key={perro.id} {...perro} />)}
     </div>
   );
 };
