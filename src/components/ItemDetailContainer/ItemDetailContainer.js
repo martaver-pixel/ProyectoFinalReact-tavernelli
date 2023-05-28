@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./ItemDetailContainer.css";
-import { useEffect, useState } from "react";
 import ItemDetail from "../ItemDetail/ItemDetail";
 import { useParams } from "react-router-dom";
 import { getDoc, doc } from "firebase/firestore";
@@ -13,14 +12,17 @@ const ItemDetailContainer = () => {
 
   useEffect(() => {
     setLoading(true);
-
     const docRef = doc(db, "products", itemId);
 
     getDoc(docRef)
-      .then((response) => {
-        const data = response.data();
-        const productsAdapted = { id: response.id, ...data };
-        setProduct(productsAdapted);
+      .then((docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          const productAdapted = { id: docSnap.id, ...data };
+          setProduct(productAdapted);
+        } else {
+          console.log("Document does not exist.");
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -29,9 +31,22 @@ const ItemDetailContainer = () => {
         setLoading(false);
       });
   }, [itemId]);
+
   return (
     <div className="ItemDetailContainer">
-      <ItemDetail {...product} />
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ItemDetail
+          id={product?.id}
+          name={product?.name}
+          img={product?.img}
+          category={product?.category}
+          description={product?.description}
+          price={product?.price}
+          stock={product?.stock}
+        />
+      )}
     </div>
   );
 };

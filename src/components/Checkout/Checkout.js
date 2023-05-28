@@ -1,6 +1,4 @@
-import React from "react";
-import { useContext, useState } from "react";
-import { Context } from "react";
+import React, { useContext, useState } from "react";
 import { db } from "../../services/firebase/firebaseConfig";
 import {
   Timestamp,
@@ -18,7 +16,7 @@ import { CartContext } from "../../context/CartContext";
 const Checkout = () => {
   const [loading, setLoading] = useState(false);
   const [orderId, setOrderId] = useState("");
-  const { cart, total, clearCart } = useContext(CartContext);
+  const { cart, clearCart, calculateTotal } = useContext(CartContext);
 
   const createOrder = async ({ name, phone, email }) => {
     setLoading(true);
@@ -31,7 +29,7 @@ const Checkout = () => {
           email,
         },
         items: cart,
-        total: total,
+        total: calculateTotal(),
         date: Timestamp.fromDate(new Date()),
       };
 
@@ -39,7 +37,7 @@ const Checkout = () => {
 
       const outOfStock = [];
 
-      const ids = cart.map((prod) => prod.id);
+      const ids = cart.map((prod) => prod.id.toString());
 
       const productsRef = collection(db, "products");
 
@@ -48,13 +46,18 @@ const Checkout = () => {
       );
       const { docs } = productsAddedFromFirestore;
 
-      console.log(docs, "hola");
       docs.forEach((doc) => {
         const dataDoc = doc.data();
         const stockDb = dataDoc.stock;
 
         const productAddedToCart = cart.find((prod) => prod.id === doc.id);
-        const prodQuantity = productAddedToCart?.quantity;
+        const prodQuantity = productAddedToCart
+          ? productAddedToCart.quantity
+          : 0;
+
+        console.log("Product ID:", doc.id);
+        console.log("Stock in Database:", stockDb);
+        console.log("Requested Quantity:", prodQuantity);
 
         if (stockDb >= prodQuantity) {
           batch.update(doc.ref, { stock: stockDb - prodQuantity });
@@ -62,6 +65,7 @@ const Checkout = () => {
           outOfStock.push({ id: doc.id, ...dataDoc });
         }
       });
+
       if (outOfStock.length === 0) {
         const orderRef = collection(db, "orders");
 
@@ -69,20 +73,23 @@ const Checkout = () => {
         setOrderId(orderAdded.id);
         clearCart();
       } else {
-        console.error("Hay productos que estan fuera de stock ");
+        console.error("Hay productos que están fuera de stock", outOfStock);
       }
     } catch (error) {
-      console.log(error, "hola");
+      console.log(error);
     } finally {
       setLoading(false);
     }
   };
+
   if (loading) {
-    return <h1>Se esta generando su orden...</h1>;
+    return <h1>Se está generando su orden...</h1>;
   }
+
   if (orderId) {
     return <h1>El id de su orden es: {orderId}</h1>;
   }
+
   return (
     <div>
       <h1>Checkout</h1>

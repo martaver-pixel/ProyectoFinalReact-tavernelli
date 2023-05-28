@@ -15,10 +15,10 @@ const ItemDetail = ({ id, name, img, category, description, price, stock }) => {
       id,
       name,
       price,
+      category,
     };
     addItem(item, quantity);
   };
-
   return (
     <article className="CardItem">
       <header className="Header">

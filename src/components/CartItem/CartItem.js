@@ -8,7 +8,7 @@ const CartItem = ({ id, title, price, quantity, img }) => {
       <img className="CartItem-image" src={img} alt={title} />
       <div className="CartItem-details">
         <h3>{title}</h3>
-        <p>Price: ${price}</p>
+        <p>Price: {price} galletitas</p>
         <p>Quantity: {quantity}</p>
       </div>
     </div>

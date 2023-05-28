@@ -6,10 +6,7 @@ const Item = ({ id, name, img, price, stock }) => {
   return (
     <article className="CardItem">
       <header className="Header">
-        <h1 className="ItemHeader">
-          {name}
-          {id}
-        </h1>
+        <h1 className="ItemHeader">{name}</h1>
       </header>
       <picture>
         <img
